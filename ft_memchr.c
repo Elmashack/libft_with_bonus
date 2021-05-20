@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elmas <elmas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/30 05:59:58 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:17:04 by nluya            ###   ########.fr       */
+/*   Created: 2021/05/09 15:46:11 by nluya             #+#    #+#             */
+/*   Updated: 2021/05/15 09:52:25 by elmas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-void	ft_putnbr_fd(int n, int fd)
+void	*ft_memchr(const void *dst, int c, size_t i)
 {
-	char	num[120];
-	int		i;
-	long	nb;
+	int	a;
 
-	nb = (long) n;
-	i = 0;
-	if (nb < 0)
+	a = (int)i;
+	while (i > 0)
 	{
-		write(fd, "-", 1);
-		nb *= -1;
-	}
-	if (nb / 10)
-		ft_putnbr_fd(nb / 10, fd);
-	num[i] = nb % 10 + 48;
-	write(fd, &num[i++], 1);
-	num[i] = '\0';
+		if (*(const unsigned char *)dst == (unsigned char)c)
+			return ((char *)dst);
+		dst++;
+		a--;
+	}	
+	return (NULL);
 }

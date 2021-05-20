@@ -1,44 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elmas <elmas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/26 17:17:39 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/15 09:53:10 by elmas            ###   ########.fr       */
+/*   Created: 2021/05/19 12:16:31 by elmas             #+#    #+#             */
+/*   Updated: 2021/05/20 20:03:09 by elmas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-int	ft_isset(char s, const char *set)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	size_t	i;
+	t_list	*begin;
+	t_list	*new_el;
 
-	i = 0;
-	while (set[i])
+	begin = ft_lstnew(f(lst -> content));
+	if (begin == NULL)
 	{
-		if (set[i] == s)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-char	*ft_strtrim(char const *s1, char const *set)
-{
-	size_t	begin;
-	size_t	end;
-	int		size;
-
-	begin = 0;
-	if (!s1)
+		ft_lstclear(&lst, del);
 		return (NULL);
-	end = ft_strlen(s1);
-	while (s1[begin] && ft_isset(s1[begin], set))
-		begin++;
-	while (end > begin && ft_isset(s1[end - 1], set))
-		end--;
-	size = end - begin;
-	return (ft_substr(s1, begin, size));
+	}
+	new_el = begin;
+	lst = lst -> next;
+	while (lst)
+	{
+		new_el -> next = ft_lstnew(f(lst -> content));
+		if (new_el -> next == NULL)
+		{
+			ft_lstclear(&begin, del);
+			return (NULL);
+		}
+		new_el = new_el -> next;
+		lst = lst -> next;
+	}	
+	return (begin);
 }

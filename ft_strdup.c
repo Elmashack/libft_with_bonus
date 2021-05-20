@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 16:36:44 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:23:23 by nluya            ###   ########.fr       */
+/*   Created: 2021/04/20 12:07:38 by nluya             #+#    #+#             */
+/*   Updated: 2021/05/09 16:21:45 by nluya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_strdup(const char *s1)
 {
-	char	*newch;
+	char	*dup;
 	int		i;
 
 	i = 0;
-	if (!s || !f)
+	dup = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (dup == NULL)
 		return (NULL);
-	newch = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (newch == NULL)
-		return (NULL);
-	while (s[i])
+	while (s1[i])
 	{
-		newch[i] = f(i, s[i]);
+		dup[i] = s1[i];
 		i++;
 	}
-	newch[i] = '\0';
-	return (newch);
+	dup[i] = '\0';
+	return (dup);
 }

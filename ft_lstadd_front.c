@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elmas <elmas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/30 05:59:58 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:17:04 by nluya            ###   ########.fr       */
+/*   Created: 2021/05/16 09:58:58 by elmas             #+#    #+#             */
+/*   Updated: 2021/05/20 19:59:12 by elmas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-void	ft_putnbr_fd(int n, int fd)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	char	num[120];
-	int		i;
-	long	nb;
-
-	nb = (long) n;
-	i = 0;
-	if (nb < 0)
-	{
-		write(fd, "-", 1);
-		nb *= -1;
-	}
-	if (nb / 10)
-		ft_putnbr_fd(nb / 10, fd);
-	num[i] = nb % 10 + 48;
-	write(fd, &num[i++], 1);
-	num[i] = '\0';
+	new -> next = *lst;
+	*lst = new;
 }

@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
+/*   By: elmas <elmas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/30 05:59:58 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:17:04 by nluya            ###   ########.fr       */
+/*   Created: 2021/05/15 10:00:16 by elmas             #+#    #+#             */
+/*   Updated: 2021/05/20 20:02:02 by elmas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-void	ft_putnbr_fd(int n, int fd)
+t_list	*ft_lstnew(void *content)
 {
-	char	num[120];
-	int		i;
-	long	nb;
+	t_list	*new_el;
 
-	nb = (long) n;
-	i = 0;
-	if (nb < 0)
-	{
-		write(fd, "-", 1);
-		nb *= -1;
-	}
-	if (nb / 10)
-		ft_putnbr_fd(nb / 10, fd);
-	num[i] = nb % 10 + 48;
-	write(fd, &num[i++], 1);
-	num[i] = '\0';
+	new_el = (t_list *)malloc(sizeof (t_list));
+	if (new_el == NULL)
+		return (NULL);
+	new_el -> content = content;
+	new_el -> next = NULL;
+	return (new_el);
 }

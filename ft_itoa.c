@@ -3,51 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elmas <elmas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/29 13:38:24 by elmas             #+#    #+#             */
-/*   Updated: 2021/04/29 17:16:24 by elmas            ###   ########.fr       */
+/*   Updated: 2021/05/09 15:44:37 by nluya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
+#include "libft.h"
+
+int	ft_size(int n)
+{
+	int	i;
+
+	i = 0;
+	if (n < 0 || n == 0)
+		i++;
+	while (n)
+	{
+		i++;
+		n /= 10;
+	}
+	return (i);
+}
+
+int	ft_dec(int n)
+{
+	int	dec;
+
+	dec = 1;
+	n /= 10;
+	while (n)
+	{
+		dec *= 10;
+		n /= 10;
+	}
+	return (dec);
+}
+
 char	*ft_itoa(int n)
 {
 	char	*num;
-	char	*copy;
 	int		i;
+	long	dec;
 	long	dup;
-	long	num_size;
 
-	dup = n;
-	num_size = 1;
-	i = 0;
-	while((dup /= 10))
-	{
-		i++;
-		num_size *= 10;
-	}
-	if (!(num = malloc(sizeof (char *) * (i + 2))))
+	dup = (long)n;
+	dec = ft_dec(n);
+	i = ft_size(n);
+	num = (char *)malloc(sizeof(char) * (i + 1));
+	if (num == NULL)
 		return (NULL);
-	copy = num;
-	dup = (long) n;
+	i = 0;
 	if (dup < 0)
 	{
 		dup = -dup;
-		*copy++ = '-';
+		num[i++] = '-';
 	}
-	while (num_size > 0)
+	while (dec > 0)
 	{
-		*copy++ = dup / num_size + 48;
-		dup = dup % num_size;
-		num_size /= 10;
+		num[i++] = dup / dec + 48;
+		dup = dup % dec;
+		dec /= 10;
 	}
+	num[i] = '\0';
 	return (num);
-}
-
-int main()
-{
-	int n = 0;
-	printf("%s\n", ft_itoa(n));
 }

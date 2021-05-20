@@ -1,99 +1,85 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-// char **ft_split(char *s, char c)
-// {
-// 	char **str;
-// 	int a = 0;
-// 	int i = 0;
-// 	int b = 0;
-// 	char *copy = s;
-// 	str = malloc(sizeof(char*) + 50);
-// 	while(copy[i])
-// 	{
-		
-// 		if (copy[i] == c)
-// 		{
-// 			//copy[i] = 's';
-// 			printf("%s\n", str[a]);
-// 			i++;
-// 			a++;
-// 			b = 0;
-			
-// 		}
-// 		str[a][b] = copy[i];
-// 		s[i];
-// 		b++;
-// 		i++;
-// 		//printf("%s \n", str[a]);
-// 	}
-// 	printf("%s\n", str[a]);
-// 	return(s);
-// }
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/09 16:17:39 by nluya             #+#    #+#             */
+/*   Updated: 2021/05/09 16:20:41 by nluya            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-char *ft_set(char *str, char delim)
+#include "libft.h"
+static void	*ft_free(char **arr_s)
 {
-	int count;
-	int i;
-	char *dup;
-
-	dup = malloc(sizeof(char *) * strlen(str)); 
-	if (*str != 0)
-	{
-		while(*str)
-		{
-			if(*str == delim)
-			{
-				*dup = '\0';
-				*str++;
-				return(str);
-			}
-			*dup++ = *str++;
-		}
-	}
-	return(str);
-}
-
-char **ft_split(char const *s, char c)
-{
-	char **str;
-	char *copy;
-	char *tmp;
-	int i;
-	int a;
+	int	i;
 
 	i = 0;
-	a = 0;
-	copy = (char *)s;
-	tmp = malloc(sizeof(char *) * (strlen(copy) + 1));
-	tmp = ft_set(copy, c);
-	printf("%s\n", tmp);
-	tmp = ft_set(tmp, c);
-	printf("%s\n", tmp);
-
-	// while(*copy)
-	// {
-	// 	if(*copy == c)
-	// 	{
-	// 		*(str + a) = ft_set(copy, c);
-	// 		str++;
-	// 		a++;
-	// 	}
-	// 	copy++;
-
-	// }
-	// while(*s)
-	// {
-	// 	printf("%s\n", *(str + i));
-	// 	i++;
-	// }
-	return(str);
+	while (arr_s[i])
+		free(arr_s[i++]);
+	free(arr_s);
+	return (NULL);
 }
 
-int main()
+static int	ft_strnum(char const *s, char c)
 {
-	char *s = "privet kak ti";
-	char c = ' ';
-	ft_split(s, c);
-	// ft_set(s, c);
+	size_t	num;
+	char	check;
+
+	check = 1;
+	num = 0;
+	while (*s)
+	{
+		if (*(s++) != c)
+		{
+			if (check)
+				num++;
+			check = 0;
+		}
+		else
+			check = 1;
+	}
+	return (num);
+}
+
+static int	ft_strsize(char const *str, char delim)
+{
+	int	len;
+
+	len = 0;
+	while (*str == delim)
+		str++;
+	while (str[len] && str[len] != delim)
+		len++;
+	return (len);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**s_arr;
+	int		num_s;
+	int		i;
+	int		len;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	num_s = ft_strnum(s, c);
+	s_arr = (char **)malloc(sizeof(char *) * (num_s + 1));
+	if (s_arr == NULL)
+		return (NULL);
+	while (i < num_s)
+	{
+		len = ft_strsize(s, c);
+		while (*s == c)
+			s++;
+		s_arr[i] = ft_substr(s, 0, len);
+		if (s_arr[i] == NULL)
+			ft_free(s_arr);
+		i++;
+		s += len;
+	}
+	s_arr[i] = NULL;
+	return (s_arr);
 }

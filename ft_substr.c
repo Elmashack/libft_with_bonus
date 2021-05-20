@@ -1,32 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 16:36:44 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:23:23 by nluya            ###   ########.fr       */
+/*   Created: 2021/04/20 21:21:46 by nluya             #+#    #+#             */
+/*   Updated: 2021/05/09 17:17:29 by nluya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*newch;
-	int		i;
+	char	*sub;
+	size_t	i;
+	size_t	size;
 
 	i = 0;
-	if (!s || !f)
+	if (s == NULL)
 		return (NULL);
-	newch = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (newch == NULL)
+	size = ft_strlen(s);
+	if (start >= size)
+		len = 0;
+	if (len > size - start && !(start >= size))
+		len = size - start;
+	sub = ft_calloc(len + 1, sizeof(char));
+	if (sub == NULL)
 		return (NULL);
-	while (s[i])
+	while (i < len && s[start + i])
 	{
-		newch[i] = f(i, s[i]);
+		sub[i] = s[start + i];
 		i++;
 	}
-	newch[i] = '\0';
-	return (newch);
+	return (sub);
 }

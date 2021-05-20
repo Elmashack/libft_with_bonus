@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 16:36:44 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:23:23 by nluya            ###   ########.fr       */
+/*   Created: 2021/04/21 11:15:37 by nluya             #+#    #+#             */
+/*   Updated: 2021/05/09 16:24:54 by nluya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+char	*ft_ocurecheck(const char *dst, const char *src, size_t len)
 {
-	char	*newch;
-	int		i;
-
-	i = 0;
-	if (!s || !f)
-		return (NULL);
-	newch = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (newch == NULL)
-		return (NULL);
-	while (s[i])
+	while (*src)
 	{
-		newch[i] = f(i, s[i]);
-		i++;
+		if (*dst != *src || len < 1)
+			return (NULL);
+		src++;
+		dst++;
+		len--;
 	}
-	newch[i] = '\0';
-	return (newch);
+	return ((char *)dst);
+}
+
+char	*ft_strnstr(const char *dst, const char *src, size_t l)
+{
+	if (*src == 0)
+		return ((char *)dst);
+	while (l > 0 && *dst)
+	{
+		if (ft_ocurecheck(dst, src, l) != NULL)
+			return ((char *)dst);
+		dst++;
+		l--;
+	}
+	return (NULL);
 }

@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 16:36:44 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:23:23 by nluya            ###   ########.fr       */
+/*   Created: 2021/04/20 11:58:46 by nluya             #+#    #+#             */
+/*   Updated: 2021/05/09 15:15:29 by nluya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+int	ft_isalnum(int c)
 {
-	char	*newch;
-	int		i;
-
-	i = 0;
-	if (!s || !f)
-		return (NULL);
-	newch = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (newch == NULL)
-		return (NULL);
-	while (s[i])
-	{
-		newch[i] = f(i, s[i]);
-		i++;
-	}
-	newch[i] = '\0';
-	return (newch);
+	if ((('z' >= c) && (c >= 'a')) || (('Z' >= c && c >= 'A')))
+		return (1);
+	else if (('9' >= c) && (c >= '0'))
+		return (1);
+	else
+		return (0);
 }

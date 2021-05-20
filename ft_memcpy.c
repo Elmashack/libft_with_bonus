@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strmapi.c                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nluya <nluya@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/29 16:36:44 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/09 16:23:23 by nluya            ###   ########.fr       */
+/*   Created: 2021/05/09 15:47:46 by nluya             #+#    #+#             */
+/*   Updated: 2021/05/09 15:48:05 by nluya            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+void	*ft_memcpy(void *dst, const void *src, size_t i)
 {
-	char	*newch;
-	int		i;
+	int	a;
 
-	i = 0;
-	if (!s || !f)
+	a = 0;
+	if (!(char *)src && !(const char *)dst)
 		return (NULL);
-	newch = (char *)malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (newch == NULL)
-		return (NULL);
-	while (s[i])
+	while (i > 0)
 	{
-		newch[i] = f(i, s[i]);
-		i++;
-	}
-	newch[i] = '\0';
-	return (newch);
+		((char *) dst)[a] = ((const char *) src)[a];
+		a++;
+		i--;
+	}	
+	return (dst);
 }
