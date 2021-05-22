@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elmas <elmas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marinamamedova <marinamamedova@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/19 12:16:31 by elmas             #+#    #+#             */
-/*   Updated: 2021/05/20 20:03:09 by elmas            ###   ########.fr       */
+/*   Updated: 2021/05/20 22:25:53 by marinamamed      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*begin;
 	t_list	*new_el;
-
+	
+	if (!lst)
+		return (NULL);
 	begin = ft_lstnew(f(lst -> content));
 	if (begin == NULL)
 	{
